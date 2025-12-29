@@ -1,6 +1,12 @@
 import streamlit as st
 
 st.title("UTC Parking Tracker")
+
+# Display total number of spots available
 st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
+    "# Available spots:"
 )
+
+# Display a grid of spaces (?)
+
+st.write("Created by Ashley Carrera, Sophia Duke, Samuel Hunt, and Nathan Parnaby")
