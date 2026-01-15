@@ -1,8 +1,6 @@
-# 🎈 Blank app template
+# Web application for UTC Parking Tracker
 
-A simple Streamlit app template for you to modify!
-
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+**Visit the user interface at https://utcparkingtracker.streamlit.app/**
 
 ### How to run it on your own machine
 
@@ -17,3 +15,7 @@ A simple Streamlit app template for you to modify!
    ```
    $ streamlit run streamlit_app.py
    ```
+
+# About
+
+We (Ashley Carrera, Sophia Duke, Samuel Hunt, and Nathan Parnaby) designed and built the UTC Parking Tracker for our senior computer engineering capstone at the University of Tennessee at Chattanooga.
