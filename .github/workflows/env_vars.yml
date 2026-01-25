@@ -1,4 +1,16 @@
 name: env_vars
 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 env:
-  GOOGLE_APPLICATION_CREDENTIALS: ${{secrets.FIRESTORE_SERVICE_ACCOUNT}}
+  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIRESTORE_SERVICE_ACCOUNT }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
