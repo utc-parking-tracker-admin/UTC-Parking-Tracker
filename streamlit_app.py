@@ -6,8 +6,10 @@ from streamlit_folium import st_folium
 
 def main():
 
-    # connection to Firestore
-    db = db_connection()
+    # check for presence of default app
+    if not firebase_admin._apps:
+        # connection to Firestore
+        db = db_connection()
 
     st.title("UTC Parking Tracker")
 
@@ -33,7 +35,6 @@ def main():
 
     st.write("Created by Ashley Carrera, Sophia Duke, Samuel Hunt, and Nathan Parnaby")
 
-@st.cache_resource
 def db_connection():
     # initialize app with Application Default credentials from private key
     app = firebase_admin.initialize_app()
@@ -41,6 +42,8 @@ def db_connection():
     db = firestore.client()
     return db
 
+# added cache tag to keep from always reading during dev
+# will eventually change to read every x seconds
 @st.cache_data
 def db_query(db:firestore, collection:str, document:str):
     # reference to collection and document

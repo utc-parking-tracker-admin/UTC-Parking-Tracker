@@ -1,16 +1,16 @@
 name: env_vars
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-env:
-  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIRESTORE_SERVICE_ACCOUNT }}
-
+ push:
+   branches: [ main ]
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
+ deploy:
+   runs-on: ubuntu-latest
+   steps:
+   - uses: actions/checkout@v4
+   - name: Create Firestore Service Account File
+     env:
+       FIRESTORE_SERVICE_ACCOUNT: ${{ secrets.FIRESTORE_SERVICE_ACCOUNT }}
+     run: |
+       echo "$FIRESTORE_SERVICE_ACCOUNT" > firestore-service-account.json
+       echo "GOOGLE_APPLICATION_CREDENTIALS=firestore-service-account.json" >> $GITHUB_ENV
