@@ -1,0 +1,4 @@
+name: env_vars
+
+env:
+  GOOGLE_APPLICATION_CREDENTIALS: ${{secrets.FIRESTORE_SERVICE_ACCOUNT}}
