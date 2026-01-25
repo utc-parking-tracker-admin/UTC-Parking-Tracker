@@ -3,13 +3,12 @@ import firebase_admin
 from firebase_admin import firestore
 import folium
 from streamlit_folium import st_folium
+import json
 
 def main():
 
-    # check for presence of default app
-    if not firebase_admin._apps:
-        # connection to Firestore
-        db = db_connection()
+    # connection to Firestore
+    db = db_connection()
 
     st.title("UTC Parking Tracker")
 
@@ -21,9 +20,9 @@ def main():
     # Display a grid of spaces (?)
 
     # location of lot
-    m = folium.Map(location=[35.046235, -85.2967971], zoom_start=16)
+    m = folium.Map(location=[35.046235, -85.2967971], zoom_start=18)
     folium.Marker(
-        [39.949610, -75.150282], popup="Lot 12", tooltip="Lot 12"
+        [35.046235, -85.2967971], popup="Lot 12", tooltip="Lot 12"
     ).add_to(m)
 
     # render map
@@ -36,8 +35,12 @@ def main():
     st.write("Created by Ashley Carrera, Sophia Duke, Samuel Hunt, and Nathan Parnaby")
 
 def db_connection():
-    # initialize app with Application Default credentials from private key
-    app = firebase_admin.initialize_app()
+    # get private key from streamlit secrets
+    cred = firebase_admin.credentials.Certificate(dict(st.secrets["gcp_service_account"]))
+    # check for presence of default app
+    if not firebase_admin._apps:
+        # initialize app with credentials
+        firebase_admin.initialize_app(cred)
     # database from which to pull parking data
     db = firestore.client()
     return db
