@@ -4,8 +4,6 @@ from firebase_admin import firestore
 import folium
 from streamlit_folium import st_folium
 
-main()
-
 def main():
 
     # connection to Firestore
@@ -52,3 +50,5 @@ def db_query(db:firestore, collection:str, document:str):
     # return the data as a dict
     data = doc.get().to_dict()
     return data
+
+main()
