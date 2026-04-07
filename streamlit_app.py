@@ -36,8 +36,6 @@ def main():
 
         # convert to Eastern
         time = time.astimezone(est)
-
-        # format
         time = time.strftime("%Y-%m-%d %I:%M:%S %p")
 
     # display values
