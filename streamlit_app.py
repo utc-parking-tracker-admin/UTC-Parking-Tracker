@@ -47,7 +47,7 @@ def main():
     else: 
         st.error("Parking lot is full")
                    
-    st.write(data)
+    #st.write(data)
     # Display a grid of spaces (?)
 
     # location of lot
