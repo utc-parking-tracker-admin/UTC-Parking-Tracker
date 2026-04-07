@@ -79,7 +79,7 @@ def db_query(_db:firestore, collection:str, document:str):
 
     #remove after error resolved
     snapshot = doc.get()
-    st.write(Document exists:", snapshot.exists)
+    st.write("Document exists:", snapshot.exists)
 
     if not snapshot.exists: 
         return None
