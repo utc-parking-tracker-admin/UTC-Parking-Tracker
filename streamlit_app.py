@@ -18,6 +18,9 @@ def main():
 
     # get parking data
     data = db_query(db, "Lot 12", "Totals")
+    if not data:
+        st.write("No data found.")
+        return
     occupied = data["count"]
     available = TOTAL_SPACES - occupied
 
@@ -26,6 +29,7 @@ def main():
         "# Available spots:" + str(available)
     )
     st.write("Occupied spots:" + str(occupied))
+    st.write(data)
     # Display a grid of spaces (?)
 
     # location of lot
