@@ -77,7 +77,7 @@ def db_connection():
 
 # added cache tag to keep from always reading during dev
 # will eventually change to read every x seconds
-@st.cache_data
+
 def db_query(_db:firestore, collection:str, document:str):
     # reference to collection and document
     c = _db.collection(collection)
