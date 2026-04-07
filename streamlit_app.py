@@ -18,11 +18,24 @@ def main():
 
     # get parking data
     data = db_query(db, "Lot 12", "Totals")
-    if not data or "count" not in data:
-        st.write("No data found.")
-        return
-    occupied = data["count"]
-    available = TOTAL_SPACES - occupied
+    if not data:
+        st.write("No data found")
+        occupied = 0
+        available = TOTAL_SPACES
+        time = "Unavailable"
+    else:
+        occupied = data.get("count", 0)
+        available = TOTAL_SPACES - occupied
+
+        time = data["time"]
+        est = pytz.timezone("US/Eastern")
+        # making sure the time is treated as UTC
+        if time.tzinfo is None:
+            time = time.replace(tzinfo=timezone.utc)
+        # convert to EST
+        time = time.astimezone(est)
+        # format the time
+        time = time.strftime("%Y-%m-%d %I:%M:%S %p")
 
     # Display total number of spots available
     st.write(
@@ -42,16 +55,6 @@ def main():
     # render map
     st_data = st_folium(m, width=725)
 
-    # return time stamp
-    time = data["time"]
-    est = pytz.timezone("US/Eastern")
-    # making sure the time is treated as UTC
-    if time.tzinfo is None:
-        time = time.replace(tzinfo = timezone.utc)
-    #format the time
-    time - time.astimezone(est)
-    # convert to est
-    time = time.strftime("%Y-%m-%d %I:%M:%S %p")
     st.write("Data last updated: " + time)
 
     st.write("Created by Ashley Carrera, Sophia Duke, Samuel Hunt, and Nathan Parnaby")
@@ -74,15 +77,10 @@ def db_query(_db:firestore, collection:str, document:str):
     # reference to collection and document
     c = _db.collection(collection)
     doc = c.document(document)
-
-    #remove after error resolved
+    
     snapshot = doc.get()
-    st.write("Document exists:", snapshot.exists)
-
     if not snapshot.exists: 
         return None
-    
-
     # return the data as a dict
     data = doc.get().to_dict()
     return data
