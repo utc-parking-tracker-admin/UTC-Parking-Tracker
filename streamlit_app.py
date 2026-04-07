@@ -43,7 +43,7 @@ def main():
     if available > 40: 
         st.success("Plenty of spaces available")
     elif available > 15: 
-        st.warning("Parking lot is almost filled:)
+        st.warning("Parking lot is almost filled.")
     else: 
         st.error("Parking lot is full")
                    
