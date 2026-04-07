@@ -15,14 +15,8 @@ def main():
     
     st.title("UTC Parking Tracker")
 
-    # DEBUG: show project ID
-    st.write("Project ID:", st.secrets["gcp_service_account"]["project_id"])
-
     # get parking data
     data = db_query(db, "Lot 12", "Totals")
-
-    # DEBUG: show what Firestore returns
-    st.write("Returned data:", data)
 
     if not data or "error" in data:
         st.error("Parking data is currently unavailable.")
@@ -30,7 +24,7 @@ def main():
         available = None
         time = "Unavailable"
     else:
-        occupied = data.get("count", 0)
+        occupied = data.get("occupied", 0)
         available = TOTAL_SPACES - occupied
 
         time = data["time"]
@@ -50,6 +44,13 @@ def main():
     if available is not None:
         st.write("# Available spots: " + str(available))
         st.write("Occupied spots: " + str(occupied))
+
+        if available > 40:
+            st.success("Plenty of parking available")
+        elif available > 15:
+            st.warning("Parking lot is filling up")
+        else:
+            st.error("Parking lot is almost full")
     else:
         st.write("# Available spots: Unavailable")
         st.write("Occupied spots: Unavailable")
