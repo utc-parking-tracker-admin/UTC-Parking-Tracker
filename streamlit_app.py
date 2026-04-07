@@ -4,6 +4,10 @@ from firebase_admin import firestore
 import folium
 from streamlit_folium import st_folium
 import json
+from datetime import timezone
+import pytz
+
+TOTAL_SPACES = 82
 
 def main():
 
@@ -12,11 +16,16 @@ def main():
 
     st.title("UTC Parking Tracker")
 
+    # get parking data
+    data = db_query(db, "Lot 12", "Totals")
+    occupied = data["count"]
+    available = TOTAL_SPACES - occupied
+
     # Display total number of spots available
     st.write(
-        "# Available spots:"
+        "# Available spots:" + str(available)
     )
-
+    st.write("Occupied spots:" + str(occupied))
     # Display a grid of spaces (?)
 
     # location of lot
@@ -30,8 +39,15 @@ def main():
     st_data = st_folium(m, width=725)
 
     # return time stamp
-    time = db_query(db, "Lot 12", "Totals")["time"]
-    time = time.strftime("%Y-%m-%d %H:%M:%S")
+    time = data["time"]
+    est = pytz.timezone("US/Eastern")
+    # making sure the time is treated as UTC
+    if time.tzinfo is None:
+        time = time.replace(tzinfo = timezone.utc)
+    #format the time
+    time - time.astimezone(est)
+    # convert to est
+    time = time.strftime("%Y-%m-%d %I:%M:%S %p")
     st.write("Data last updated: " + time)
 
     st.write("Created by Ashley Carrera, Sophia Duke, Samuel Hunt, and Nathan Parnaby")
