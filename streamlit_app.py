@@ -83,8 +83,7 @@ def db_query(_db:firestore, collection:str, document:str):
 
     if not snapshot.exists: 
         return None
-    data = snapshot.to_dict()
-    return data
+    
 
     # return the data as a dict
     data = doc.get().to_dict()
