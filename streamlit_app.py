@@ -13,6 +13,8 @@ def main():
 
     # connection to Firestore
     db = db_connection()
+    #remove after error
+    st.write("Trying to read firestore...")
 
     st.title("UTC Parking Tracker")
 
@@ -74,6 +76,15 @@ def db_query(_db:firestore, collection:str, document:str):
     # reference to collection and document
     c = _db.collection(collection)
     doc = c.document(document)
+
+    #remove after error resolved
+    snapshot = doc.get()
+    st.write(Document exists:", snapshot.exists)
+
+    if not snapshot.exists: 
+        return None
+    data = snapshot.to_dict()
+    return data
 
     # return the data as a dict
     data = doc.get().to_dict()
