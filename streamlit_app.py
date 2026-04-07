@@ -38,10 +38,15 @@ def main():
         time = time.strftime("%Y-%m-%d %I:%M:%S %p")
 
     # Display total number of spots available
-    st.write(
-        "# Available spots:" + str(available)
-    )
+    st.write("# Available spots:" + str(available))
     st.write("Occupied spots:" + str(occupied))
+    if available > 40: 
+        st.success("Plenty of spaces available")
+    elif available > 15: 
+        st.warning("Parking lot is almost filled:)
+    else: 
+        st.error("Parking lot is full")
+                   
     st.write(data)
     # Display a grid of spaces (?)
 
