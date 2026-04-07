@@ -13,7 +13,7 @@ def main():
 
     # connection to Firestore
     db = db_connection()
-    
+    st.write("Project ID:", st.secrets["gcp_service_account"]["project_id"])
     st.title("UTC Parking Tracker")
 
     # get parking data
