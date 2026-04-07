@@ -18,7 +18,7 @@ def main():
 
     # get parking data
     data = db_query(db, "Lot 12", "Totals")
-    if not data:
+    if not data or "count" not in data:
         st.write("No data found.")
         return
     occupied = data["count"]
